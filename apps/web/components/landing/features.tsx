@@ -110,11 +110,7 @@ export function Features() {
 
         {/* 2-col card grid */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "var(--spacing-6)",
-          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {FEATURES.map((feature) => {
             const Icon = feature.icon;

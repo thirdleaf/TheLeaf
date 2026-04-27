@@ -1,18 +1,21 @@
 // ─────────────────────────────────────────────────────────────
-// Theme management — JS variable based (NOT localStorage)
-// Reads initial preference from system, allows runtime toggle.
+// Theme management — LocalStorage based persistence
 // ─────────────────────────────────────────────────────────────
 
 type Theme = "dark" | "light";
 
-// Module-level singleton — no persistence between page loads by design
-let currentTheme: Theme = "dark";
+const THEME_KEY = "thirdleaf-theme";
 
 /**
  * Get the currently active theme.
  */
 export function getTheme(): Theme {
-  return currentTheme;
+  if (typeof window === "undefined") return "light";
+  const stored = localStorage.getItem(THEME_KEY) as Theme | null;
+  if (stored) return stored;
+  
+  // Default to light
+  return "light";
 }
 
 /**
@@ -20,13 +23,13 @@ export function getTheme(): Theme {
  * Applies the .light class to :root for CSS var overrides.
  */
 export function setTheme(theme: Theme): void {
-  currentTheme = theme;
   if (typeof document !== "undefined") {
     if (theme === "light") {
       document.documentElement.classList.add("light");
     } else {
       document.documentElement.classList.remove("light");
     }
+    localStorage.setItem(THEME_KEY, theme);
   }
 }
 
@@ -35,18 +38,17 @@ export function setTheme(theme: Theme): void {
  * Returns the new theme.
  */
 export function toggleTheme(): Theme {
-  const next = currentTheme === "dark" ? "light" : "dark";
+  const current = getTheme();
+  const next = current === "dark" ? "light" : "dark";
   setTheme(next);
   return next;
 }
 
 /**
- * Initialize theme from system preference.
- * Call this once on app mount (client-side only).
+ * Initialize theme from system preference or storage.
  */
 export function initTheme(): void {
   if (typeof window === "undefined") return;
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  // Default to dark (brand decision) unless system is light
-  setTheme(prefersDark ? "dark" : "dark"); // Always dark by default per spec
+  const theme = getTheme();
+  setTheme(theme);
 }

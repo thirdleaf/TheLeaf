@@ -8,11 +8,22 @@ import { FAQ } from "@/components/landing/faq";
 import { Footer } from "@/components/landing/footer";
 
 export const metadata: Metadata = {
-  title: "ThirdLeaf — India's Quant Trading Journal & Analytics Platform",
+  title: "Thirdleaf – Custom Algorithmic Trading Tools | Jaipur",
   description:
-    "Journal, backtest, and automate your trading edge. The professional quant workspace built for NSE, BSE, and MCX traders. India-first tax engine included.",
+    "Thirdleaf builds custom algo trading systems, backtesting tools, broker API integrations and trade automation for traders across India. Based in Jaipur.",
+  keywords: "algo trading tools India, backtesting software, broker API integration, Zerodha algo, Dhan API, trading automation Jaipur",
+  robots: {
+    index: true,
+    follow: true,
+  },
   alternates: {
-    canonical: "https://thirdleaf.com",
+    canonical: "https://thirdleaf.in",
+  },
+  openGraph: {
+    title: "Thirdleaf – Custom Trading Technology",
+    description: "We build algorithmic trading tools, backtesting engines and automation systems for serious traders across India.",
+    url: "https://thirdleaf.in",
+    type: "website",
   },
 };
 

@@ -38,6 +38,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  verification: {
+    google: "dmUJ1wflZHTSPuYslNRwcAwMSCJGDT-ej6CTr9tgh3Q",
+  },
 };
 
 interface RootLayoutProps {
@@ -54,6 +57,22 @@ export default function RootLayout({ children }: RootLayoutProps) {
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('thirdleaf-theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.remove('light');
+                  } else {
+                    document.documentElement.classList.add('light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
         />
       </head>
       <body className="antialiased">

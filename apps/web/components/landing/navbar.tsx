@@ -43,20 +43,15 @@ export function Navbar() {
         <Link
           href="/"
           id="nav-logo"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            textDecoration: "none",
-            flex: 1,
-          }}
+          className="flex items-center no-underline flex-1 group"
         >
-          <img
-            src="/logo.svg"
-            alt="ThirdLeaf Logo"
-            width={160}
-            height={64}
-            style={{ objectFit: "contain", margin: "-12px 0" }}
-          />
+          <div className="h-8 w-40 relative grayscale dark:grayscale-0 dark:brightness-150 contrast-125 dark:contrast-100 group-hover:scale-[1.05] transition-transform origin-left">
+            <img
+              src="/logo.svg"
+              alt="ThirdLeaf Logo"
+              className="h-full w-full object-contain object-left scale-[3.5] origin-left"
+            />
+          </div>
         </Link>
 
         {/* Desktop nav links */}

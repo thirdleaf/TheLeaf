@@ -204,9 +204,9 @@ function EquityCurve() {
         </div>
       </div>
 
-      {/* Floating metric badges */}
+      {/* Floating metric badges - Hidden on small mobile to prevent overflow */}
       <div
-        className="card"
+        className="card hidden sm:flex"
         style={{
           position: "absolute",
           top: -16,
@@ -226,7 +226,7 @@ function EquityCurve() {
       </div>
 
       <div
-        className="card"
+        className="card hidden sm:flex"
         style={{
           position: "absolute",
           bottom: 20,
@@ -285,9 +285,9 @@ export function Hero() {
       />
 
       <div className="container-xl" style={{ position: "relative", zIndex: 1 }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-center lg:text-left">
           {/* Left: copy */}
-          <div style={{ maxWidth: 680 }}>
+          <div className="mx-auto lg:mx-0" style={{ maxWidth: 680 }}>
             {/* Pill badge */}
             <div
               style={{ marginBottom: "var(--spacing-5)" }}
@@ -339,10 +339,16 @@ export function Hero() {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
+                justifyContent: "center",
                 gap: "var(--spacing-3)",
                 marginBottom: "var(--spacing-8)",
               }}
             >
+              <style jsx>{`
+                @media (min-width: 1024px) {
+                  div { justify-content: flex-start !important; }
+                }
+              `}</style>
               <Link
                 href="/register"
                 id="cta-hero-start-free"
@@ -369,9 +375,15 @@ export function Hero() {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
+                justifyContent: "center",
                 gap: "var(--spacing-6)",
               }}
             >
+              <style jsx>{`
+                @media (min-width: 1024px) {
+                  div { justify-content: flex-start !important; }
+                }
+              `}</style>
               {[
                 { value: "2,400+", label: "Active traders" },
                 { value: "₹847Cr+", label: "Trades logged" },

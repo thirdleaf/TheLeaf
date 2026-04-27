@@ -16,12 +16,16 @@ import {
   UserCircle,
   Brain,
   CheckCircle2,
-  CreditCard
+  CreditCard,
+  Menu,
+  X,
+  ChevronRight
 } from "lucide-react";
 import { useAlerts } from "../../hooks/useRealTime";
 import { AnnouncementBanner, ImpersonationBanner } from "../../components/common/PlatformAlerts";
 import { AchievementCelebration } from "../../components/community/AchievementCelebration";
 import { OfflineBanner } from "../../components/common/OfflineBanner";
+import Image from "next/image";
 
 const NAV_ITEMS = [
   { href: "/app/dashboard", label: "Dashboard", icon: BarChart2 },
@@ -38,56 +42,87 @@ const NAV_ITEMS = [
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { alerts } = useAlerts();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--color-surface)", color: "var(--color-text-primary)" }}>
       <AchievementCelebration />
       <ImpersonationBanner />
       <OfflineBanner />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
       
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden" 
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar - Persistent Left */}
-      <aside className="w-64 shrink-0 bg-[#09090b] border-r border-white/5 flex flex-col hidden lg:flex">
-        <div className="h-16 flex items-center px-6 border-b border-white/5 bg-zinc-950">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-primary to-orange-400" />
-            <span className="font-heading font-black text-xl tracking-tight text-white">ThirdLeaf</span>
-          </div>
+      <aside className={`
+        fixed inset-y-0 left-0 z-50 w-72 shrink-0 border-r flex flex-col transition-transform duration-300 ease-in-out
+        lg:static lg:translate-x-0
+        ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+      `} style={{ backgroundColor: "var(--color-surface-2)", borderColor: "var(--color-border)" }}>
+        <div className="h-16 flex items-center justify-between px-6 border-b" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-surface-3)" }}>
+          <Link href="/app/dashboard" className="flex items-center gap-3">
+            <div className="w-8 h-8 relative grayscale brightness-150 contrast-125 dark:brightness-100 dark:contrast-100">
+               <Image src="/logo.svg" alt="ThirdLeaf" fill className="object-contain" />
+            </div>
+            <span className="font-heading font-black text-xl tracking-tight" style={{ color: "var(--color-text-primary)" }}>ThirdLeaf</span>
+          </Link>
+          <button onClick={() => setIsMobileMenuOpen(false)} className="lg:hidden p-2 hover:bg-white/5 rounded-lg">
+            <X size={20} style={{ color: "var(--color-text-muted)" }} />
+          </button>
         </div>
         
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto custom-scrollbar">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname.startsWith(item.href);
             return (
               <Link 
                 key={item.href} 
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  isActive ? "bg-brand-primary/10 text-brand-primary border border-brand-primary/20" : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+                  isActive 
+                    ? "text-accent border shadow-sm" 
+                    : "text-zinc-400 hover:text-white"
                 }`}
+                style={{ 
+                  backgroundColor: isActive ? "var(--color-accent-light)" : "transparent",
+                  borderColor: isActive ? "var(--color-border-accent)" : "transparent"
+                }}
               >
-                <item.icon className="w-5 h-5 shrink-0" />
+                <item.icon className={`w-5 h-5 shrink-0 transition-transform ${isActive ? "scale-110" : "group-hover:scale-110"}`} />
                 {item.label}
               </Link>
             )
           })}
           
           <div className="pt-8 pb-2">
-            <p className="px-3 text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-2">Admin Only</p>
+            <p className="px-3 text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: "var(--color-text-muted)" }}>Admin Only</p>
             <Link 
                 href="/app/prop"
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  pathname.startsWith("/app/prop") ? "bg-purple-500/10 text-purple-400 border border-purple-500/20" : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+                  pathname.startsWith("/app/prop") 
+                    ? "text-purple-400 border border-purple-500/20 shadow-sm" 
+                    : "text-zinc-400 hover:text-white"
                 }`}
+                style={{ 
+                  backgroundColor: pathname.startsWith("/app/prop") ? "rgba(168, 85, 247, 0.12)" : "transparent",
+                }}
               >
-                 <ShieldAlert className="w-5 h-5 shrink-0" />
+                 <ShieldAlert className="w-5 h-5 shrink-0 transition-transform group-hover:scale-110" />
                  Prop Trading
               </Link>
            </div>
         </nav>
 
         {/* Rules Ritual Widget */}
-        <div className="p-4 mt-auto border-t border-white/5 bg-zinc-950/50">
+        <div className="p-4 mt-auto border-t" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-surface-3)" }}>
            <RulesRitualWidget />
         </div>
       </aside>
@@ -96,19 +131,31 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* Sticky Top Bar */}
-        <header className="h-16 bg-[#09090b]/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-30 flex items-center justify-between px-8 shrink-0">
+        <header className="h-16 backdrop-blur-xl border-b sticky top-0 z-30 flex items-center justify-between px-4 lg:px-8 shrink-0" style={{ backgroundColor: "var(--color-surface-alpha)", borderColor: "var(--color-border)" }}>
           <div className="flex items-center gap-4">
-            <select className="bg-black border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white font-medium focus:outline-none">
-              <option>Zerodha Primary [6Z24]</option>
-              <option>AngelOne Swing [Q1A]</option>
-            </select>
-            <div className="h-6 w-px bg-white/10" />
-            <select className="bg-transparent border-none text-zinc-400 text-sm font-medium focus:outline-none hover:text-white cursor-pointer">
-              <option>Today</option>
-              <option>This Week</option>
-              <option>This Month</option>
-              <option>This FY</option>
-            </select>
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden p-2 -ml-2 hover:bg-white/5 rounded-xl transition-colors"
+            >
+              <Menu size={20} style={{ color: "var(--color-text-primary)" }} />
+            </button>
+
+            <div className="hidden md:flex items-center gap-4">
+              <select className="bg-transparent border rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none" style={{ borderColor: "var(--color-border)", color: "var(--color-text-primary)" }}>
+                <option>Zerodha Primary [6Z24]</option>
+                <option>AngelOne Swing [Q1A]</option>
+              </select>
+              <div className="h-6 w-px" style={{ backgroundColor: "var(--color-border)" }} />
+              <select className="bg-transparent border-none text-sm font-medium focus:outline-none cursor-pointer" style={{ color: "var(--color-text-muted)" }}>
+                <option>Today</option>
+                <option>This Week</option>
+                <option>This Month</option>
+                <option>This FY</option>
+              </select>
+            </div>
+            <div className="md:hidden flex items-center">
+               <span className="text-xs font-bold px-2 py-1 rounded bg-accent/10 text-accent border border-accent/20">6Z24</span>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">
@@ -118,8 +165,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
              </div>
              <div className="flex items-center gap-3 pl-4 border-l border-white/10 cursor-pointer hover:opacity-80 transition-opacity">
                <div className="text-right hidden sm:block">
-                 <p className="text-sm font-medium text-white">Vikas Trader</p>
-                 <p className="text-xs text-zinc-500">Pro Plan</p>
+                 <p className="text-sm font-medium" style={{ color: "var(--color-text-primary)" }}>Vikas Trader</p>
+                 <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Pro Plan</p>
                </div>
                <UserCircle className="w-8 h-8 text-zinc-300" />
              </div>
@@ -127,7 +174,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Scrollable Page Outlet */}
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-black p-8">
+          <main className="flex-1 overflow-x-hidden overflow-y-auto p-8" style={{ backgroundColor: "var(--color-bg)" }}>
             <AnnouncementBanner />
             {children}
           </main>
@@ -151,8 +198,8 @@ const RulesRitualWidget = () => {
   return (
     <div className="space-y-4">
        <div className="flex items-center justify-between">
-          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Daily Ritual</p>
-          <span className="text-[10px] font-bold text-brand-primary">
+          <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: "var(--color-text-muted)" }}>Daily Ritual</p>
+          <span className="text-[10px] font-bold" style={{ color: "var(--color-accent)" }}>
             {rules.filter(r => r.checked).length}/{rules.length}
           </span>
        </div>
@@ -161,16 +208,20 @@ const RulesRitualWidget = () => {
              <button 
                key={rule.id}
                onClick={() => toggleRule(rule.id)}
-               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all ${
-                 rule.checked ? "bg-emerald-500/10 border border-emerald-500/20" : "bg-black/20 border border-white/5 hover:border-white/10"
+               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all border ${
+                 rule.checked ? "shadow-inner opacity-60" : "hover:border-zinc-500"
                }`}
+               style={{ 
+                 backgroundColor: rule.checked ? "var(--color-success-light)" : "var(--color-surface)",
+                 borderColor: rule.checked ? "var(--color-success)" : "var(--color-border)"
+               }}
              >
-                <div className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center ${
-                  rule.checked ? "bg-emerald-500 border-emerald-500" : "border-zinc-700"
-                }`}>
+                <div className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center transition-colors ${
+                  rule.checked ? "border-transparent" : "border-zinc-700"
+                }`} style={{ backgroundColor: rule.checked ? "var(--color-success)" : "transparent" }}>
                    {rule.checked && <CheckCircle2 size={10} className="text-black" />}
                 </div>
-                <span className={`text-[11px] font-medium leading-tight ${rule.checked ? "text-zinc-500 line-through" : "text-zinc-300"}`}>
+                <span className={`text-[11px] font-medium leading-tight transition-all ${rule.checked ? "line-through" : ""}`} style={{ color: rule.checked ? "var(--color-text-muted)" : "var(--color-text-primary)" }}>
                   {rule.text}
                 </span>
              </button>

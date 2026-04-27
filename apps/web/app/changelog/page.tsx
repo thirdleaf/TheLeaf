@@ -7,10 +7,7 @@ import {
   History, 
   Terminal, 
   Cpu, 
-  Globe, 
-  ShieldCheck, 
-  Zap,
-  ArrowRight
+  Zap
 } from "lucide-react";
 
 const UPDATES = [
@@ -57,12 +54,12 @@ const UPDATES = [
 
 export default function ChangelogPage() {
   return (
-    <div className="min-h-screen bg-[#050508] text-white">
+    <div className="min-h-screen bg-bg text-text-primary">
       <Navbar />
 
       <main className="pt-32 pb-24 px-6 max-w-4xl mx-auto">
         <div className="mb-20 text-center space-y-4">
-           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-widest">
+           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-bold uppercase tracking-widest">
               <Terminal size={14} />
               Build History
            </div>
@@ -70,7 +67,7 @@ export default function ChangelogPage() {
              Moving fast. <br />
              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">Engineering first.</span>
            </h1>
-           <p className="text-zinc-500 text-lg">
+           <p className="text-text-muted text-lg">
              A record of every major update pushed to the ThirdLeaf platform.
            </p>
         </div>
@@ -81,35 +78,35 @@ export default function ChangelogPage() {
                 <div className="flex gap-8 lg:gap-16">
                    <div className="hidden lg:block w-32 pt-2">
                       <div className="sticky top-40">
-                         <p className="text-lg font-black text-white">{update.version}</p>
-                         <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest mt-1">{update.date}</p>
+                         <p className="text-lg font-black text-text-primary">{update.version}</p>
+                         <p className="text-[10px] text-text-disabled font-bold uppercase tracking-widest mt-1">{update.date}</p>
                       </div>
                    </div>
                    
-                   <div className="flex-1 bg-zinc-900/50 border border-white/5 rounded-[40px] p-8 lg:p-12 group-hover:bg-zinc-900 transition-all group-hover:border-indigo-500/20">
+                   <div className="flex-1 bg-surface-2/20 border border-border rounded-[40px] p-8 lg:p-12 group-hover:bg-surface-2 transition-all group-hover:border-accent/20">
                       <div className="flex items-center justify-between mb-8">
                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-indigo-400">
+                            <div className="w-12 h-12 bg-surface-3 rounded-2xl flex items-center justify-center text-accent">
                                <update.icon size={22} />
                             </div>
                             <div className="lg:hidden">
-                               <p className="text-xs font-black text-white">{update.version}</p>
-                               <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">{update.date}</p>
+                               <p className="text-xs font-black text-text-primary">{update.version}</p>
+                               <p className="text-[10px] text-text-disabled font-bold uppercase tracking-widest">{update.date}</p>
                             </div>
                          </div>
-                         <span className="px-3 py-1 rounded-full bg-white/5 text-[10px] font-bold uppercase tracking-widest text-zinc-400 border border-white/5">
+                         <span className="px-3 py-1 rounded-full bg-surface-3 text-[10px] font-bold uppercase tracking-widest text-text-muted border border-border">
                             {update.tag}
                          </span>
                       </div>
                       
-                      <h2 className="text-2xl lg:text-3xl font-bold mb-6 text-white group-hover:text-indigo-400 transition-colors">
+                      <h2 className="text-2xl lg:text-3xl font-bold mb-6 text-text-primary group-hover:text-accent transition-colors">
                         {update.title}
                       </h2>
                       
                       <ul className="space-y-4">
                          {update.changes.map((change, i) => (
-                           <li key={i} className="flex gap-3 text-zinc-500 text-sm lg:text-base leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
+                           <li key={i} className="flex gap-3 text-text-secondary text-sm lg:text-base leading-relaxed">
+                              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
                               {change}
                            </li>
                          ))}
@@ -123,8 +120,8 @@ export default function ChangelogPage() {
         {/* Suggestion CTA */}
         <div className="mt-32 p-12 bg-emerald-500/5 border border-emerald-500/10 rounded-[48px] text-center space-y-6">
            <Zap className="mx-auto text-emerald-500" size={32} />
-           <h3 className="text-2xl font-black">Want to see the live status?</h3>
-           <p className="text-zinc-500">Our system health dashboard tracks every broker connector in real-time.</p>
+           <h3 className="text-2xl font-black text-text-primary">Want to see the live status?</h3>
+           <p className="text-text-muted">Our system health dashboard tracks every broker connector in real-time.</p>
            <button className="btn btn-primary px-8">System Status Hub</button>
         </div>
       </main>

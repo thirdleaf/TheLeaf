@@ -12,13 +12,13 @@ export default function ProfilePage() {
       <div className="flex items-center gap-4">
         <Link 
           href="/app/settings" 
-          className="w-10 h-10 rounded-xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+          className="w-10 h-10 rounded-xl bg-surface-2 border border-border flex items-center justify-center text-text-disabled hover:text-text-primary hover:bg-surface-3 transition-all"
         >
           <ChevronLeft size={20} />
         </Link>
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Manage Profile</h1>
-          <p className="text-sm text-zinc-500">Update your account information and preferences.</p>
+          <h1 className="text-2xl font-black text-text-primary tracking-tight">Manage Profile</h1>
+          <p className="text-sm text-text-muted">Update your account information and preferences.</p>
         </div>
       </div>
 
@@ -30,20 +30,20 @@ export default function ProfilePage() {
           appearance={{
             elements: {
               rootBox: "w-full",
-              card: "bg-zinc-900/50 border border-white/5 shadow-none w-full",
-              navbar: "hidden md:flex border-r border-white/5",
+              card: "bg-surface-2/50 border border-border shadow-none w-full",
+              navbar: "hidden md:flex border-r border-border",
               pageScrollBox: "bg-transparent",
-              headerTitle: "text-white font-black",
-              headerSubtitle: "text-zinc-500",
-              profileSectionTitleText: "text-indigo-400 font-bold",
-              userPreviewMainIdentifier: "text-white font-bold",
-              userPreviewSecondaryIdentifier: "text-zinc-500",
-              formFieldLabel: "text-zinc-400 font-semibold",
-              formFieldInput: "bg-zinc-800 border-white/5 text-white focus:border-indigo-500/50",
-              breadcrumbsItem: "text-zinc-500",
-              breadcrumbsSeparator: "text-zinc-700",
-              badge: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
-              accordionTriggerButton: "text-white hover:bg-white/5",
+              headerTitle: "text-text-primary font-black",
+              headerSubtitle: "text-text-muted",
+              profileSectionTitleText: "text-accent font-bold",
+              userPreviewMainIdentifier: "text-text-primary font-bold",
+              userPreviewSecondaryIdentifier: "text-text-muted",
+              formFieldLabel: "text-text-secondary font-semibold",
+              formFieldInput: "bg-surface-3 border-border text-text-primary focus:border-accent/50",
+              breadcrumbsItem: "text-text-muted",
+              breadcrumbsSeparator: "text-text-disabled",
+              badge: "bg-accent/10 text-accent border-accent/20",
+              accordionTriggerButton: "text-text-primary hover:bg-surface-3",
               footer: "hidden",
             }
           }}

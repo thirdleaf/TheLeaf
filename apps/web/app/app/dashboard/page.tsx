@@ -176,12 +176,12 @@ export default function DashboardPage() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
          <div>
             <div className="flex items-center gap-2 mb-1">
-               <Activity size={14} style={{ color: "var(--color-accent)" }} />
-               <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: "var(--color-text-muted)" }}>Live Command Center</span>
+               <Activity size={14} className="text-accent" />
+               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-text-disabled">Live Command Center</span>
             </div>
-            <h1 className="text-3xl font-black tracking-tight" style={{ color: "var(--color-text-primary)" }}>Market Analytics Overview</h1>
+            <h1 className="text-3xl font-black tracking-tight text-text-primary">Market Analytics Overview</h1>
          </div>
-         <p className="text-xs font-medium" style={{ color: "var(--color-text-muted)" }}>Last updated: {new Date().toLocaleTimeString()}</p>
+         <p className="text-xs font-medium text-text-disabled">Last updated: {new Date().toLocaleTimeString()}</p>
       </div>
 
       {/* ROW 1: KPI Grid */}
@@ -277,15 +277,15 @@ export default function DashboardPage() {
          </Link>
       </div>
 
-      <div className="bg-[#09090b] border border-white/5 rounded-2xl p-6">
+       <div className="card">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
            <div>
-             <h2 className="text-lg font-bold text-white mb-1">Equity Curve</h2>
-             <p className="text-sm text-zinc-500">Performance accounting for all trade deductions.</p>
+             <h2 className="text-lg font-bold mb-1 text-text-primary">Equity Curve</h2>
+             <p className="text-sm text-text-muted">Performance accounting for all trade deductions.</p>
            </div>
-           <div className="flex bg-zinc-900 border border-white/5 text-xs font-semibold rounded-lg p-1">
+           <div className="flex text-xs font-semibold rounded-lg p-1 bg-surface-2 border border-border">
              {['All', 'FY', '6M', '3M', '1M'].map((opt, i) => (
-                <button key={opt} className={`px-3 py-1.5 rounded-md ${i===2 ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}>{opt}</button>
+                <button key={opt} className={`px-3 py-1.5 rounded-md ${i===2 ? 'bg-surface-3 text-text-primary shadow-sm' : 'text-text-muted hover:text-text-primary'}`}>{opt}</button>
              ))}
            </div>
         </div>
@@ -294,39 +294,38 @@ export default function DashboardPage() {
             <AreaChart data={MOCK_EQUITY} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorEquity" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#c084fc" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#c084fc" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="var(--color-accent)" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="var(--color-accent)" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="colorDd" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ef4444" stopOpacity={0.5}/>
-                  <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="var(--color-danger)" stopOpacity={0.5}/>
+                  <stop offset="95%" stopColor="var(--color-danger)" stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff0a" />
-              <XAxis dataKey="date" stroke="#ffffff40" fontSize={11} tickMargin={10} minTickGap={30} />
-              <YAxis yAxisId="left" stroke="#ffffff40" fontSize={11} tickFormatter={(val) => `${Math.round(val/1000)}k`} />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" opacity={0.5} />
+              <XAxis dataKey="date" stroke="var(--color-text-disabled)" fontSize={11} tickMargin={10} minTickGap={30} />
+              <YAxis yAxisId="left" stroke="var(--color-text-disabled)" fontSize={11} tickFormatter={(val) => `${Math.round(val/1000)}k`} />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#09090b', borderColor: '#ffffff1a', borderRadius: '12px' }}
-                itemStyle={{ color: '#fff', fontWeight: 'bold' }}
+                contentStyle={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', borderRadius: '12px' }}
+                itemStyle={{ color: 'var(--color-text-primary)', fontWeight: 'bold' }}
               />
-              <Area yAxisId="left" type="monotone" dataKey="equity" stroke="#c084fc" strokeWidth={3} fill="url(#colorEquity)" />
-              <Area yAxisId="right" type="monotone" dataKey="drawdown" stroke="#ef4444" strokeWidth={1} fill="url(#colorDd)" />
+               <Area yAxisId="left" type="monotone" dataKey="equity" stroke="var(--color-accent)" strokeWidth={3} fill="url(#colorEquity)" />
+               <Area yAxisId="right" type="monotone" dataKey="drawdown" stroke="var(--color-danger)" strokeWidth={1} fill="url(#colorDd)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-[#09090b] border border-white/5 rounded-2xl p-6 overflow-hidden">
-          <h2 className="text-lg font-bold text-white mb-6">Execution Consistency Map</h2>
+        <div className="card overflow-hidden">
+          <h2 className="text-lg font-bold mb-6" style={{ color: "var(--color-text-primary)" }}>Execution Consistency Map</h2>
           <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
             <ActivityCalendar 
               data={MOCK_HEATMAP} 
               theme={{
-                 light: ['#18181b', '#065f46', '#059669', '#10b981', '#34d399'],
-                 dark: ['#18181b', '#7f1d1d', '#b91c1c', '#dc2626', '#f87171'],
+                 light: ['var(--color-surface-2)', 'var(--color-success-light)', 'var(--color-success)', 'var(--color-success)', 'var(--color-success)'],
+                 dark: ['var(--color-surface-2)', 'var(--color-success-light)', 'var(--color-success)', 'var(--color-success)', 'var(--color-success)'],
               }}
-              colorScheme="light"
               blockSize={16}
               blockRadius={4}
               blockMargin={6}
@@ -334,15 +333,15 @@ export default function DashboardPage() {
             />
           </div>
         </div>
-        <div className="bg-[#09090b] border border-white/5 rounded-2xl p-6">
-          <h2 className="text-lg font-bold text-white mb-6">Profit Factor by Edge Setup</h2>
+        <div className="card">
+          <h2 className="text-lg font-bold mb-6" style={{ color: "var(--color-text-primary)" }}>Profit Factor by Edge Setup</h2>
           <div className="h-[250px] w-full mt-4">
              <ResponsiveContainer width="100%" height="100%">
                <BarChart data={MOCK_SETUPS} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
-                 <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#ffffff0a" />
-                 <XAxis type="number" stroke="#ffffff40" fontSize={12} />
-                 <YAxis dataKey="name" type="category" stroke="#ffffff80" fontSize={12} width={80} />
-                 <Tooltip cursor={{fill: '#ffffff0a'}} contentStyle={{ backgroundColor: '#09090b', borderColor: '#ffffff1a', borderRadius: '8px' }}/>
+                 <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="var(--color-border)" opacity={0.5} />
+                 <XAxis type="number" stroke="var(--color-text-disabled)" fontSize={12} />
+                 <YAxis dataKey="name" type="category" stroke="var(--color-text-muted)" fontSize={12} width={80} />
+                 <Tooltip cursor={{fill: 'var(--color-surface-2)'}} contentStyle={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)', borderRadius: '8px' }}/>
                  <Bar dataKey="profitFactor" radius={[0, 4, 4, 0]} barSize={24} />
                </BarChart>
              </ResponsiveContainer>
@@ -350,8 +349,8 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Live Ticker Strip - Mobile Audit Fix */}
-      <div className="fixed bottom-0 left-0 lg:left-64 right-0 h-10 bg-[#09090b]/90 border-t border-white/5 backdrop-blur-3xl z-40 flex items-center overflow-hidden">
+       {/* Live Ticker Strip - Mobile Audit Fix */}
+      <div className="fixed bottom-0 left-0 lg:left-72 right-0 h-10 border-t backdrop-blur-3xl z-40 flex items-center overflow-hidden" style={{ backgroundColor: "var(--color-surface-2-alpha)", borderColor: "var(--color-border)" }}>
         <div className="flex items-center gap-8 px-8 animate-marquee whitespace-nowrap">
           {[
             { s: "NIFTY 50", p: "22,453.20", c: "+0.45%" },
@@ -361,8 +360,8 @@ export default function DashboardPage() {
             { s: "INFY", p: "1,520.10", c: "+0.85%" },
           ].map((item, i) => (
              <div key={i} className="flex items-center gap-2">
-                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{item.s}</span>
-                <span className="text-[11px] font-bold font-mono text-white">{item.p}</span>
+                <span className="text-[10px] font-black text-text-disabled uppercase tracking-widest">{item.s}</span>
+                <span className="text-[11px] font-bold font-mono text-text-primary">{item.p}</span>
                 <span className={`text-[10px] font-black ${item.c.startsWith('+') ? 'text-emerald-500' : 'text-red-500'}`}>{item.c}</span>
              </div>
           ))}
@@ -374,8 +373,8 @@ export default function DashboardPage() {
             { s: "INFY", p: "1,520.10", c: "+0.85%" },
           ].map((item, i) => (
              <div key={i+"-dup"} className="flex items-center gap-2">
-                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{item.s}</span>
-                <span className="text-[11px] font-bold font-mono text-white">{item.p}</span>
+                <span className="text-[10px] font-black text-text-disabled uppercase tracking-widest">{item.s}</span>
+                <span className="text-[11px] font-bold font-mono text-text-primary">{item.p}</span>
                 <span className={`text-[10px] font-black ${item.c.startsWith('+') ? 'text-emerald-500' : 'text-red-500'}`}>{item.c}</span>
              </div>
           ))}
