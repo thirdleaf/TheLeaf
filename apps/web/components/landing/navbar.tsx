@@ -49,7 +49,7 @@ export function Navbar() {
             <img
               src="/logo.svg"
               alt="ThirdLeaf Logo"
-              className="h-full w-full object-contain object-left scale-[3.5] origin-left"
+              className="h-full w-full object-contain object-left"
             />
           </div>
         </Link>

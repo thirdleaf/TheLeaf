@@ -1434,3 +1434,15 @@ export type NewSubscription = typeof subscriptions.$inferInsert;
 export type BillingPayment = typeof billingPayments.$inferSelect;
 export type NewBillingPayment = typeof billingPayments.$inferInsert;
 export type FeatureUsage = typeof featureUsage.$inferSelect;
+
+// ── Onboarding / Careers ──────────────────────────────────────────────
+export const offerLetters = pgTable(
+  "offer_letters",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    referenceId: varchar("reference_id", { length: 256 }).notNull(),
+    fileName: varchar("file_name", { length: 256 }).notNull(),
+    fileData: text("file_data").notNull(), // base64 encoded PDF
+    uploadedAt: timestamp("uploaded_at", { withTimezone: true }).notNull().defaultNow(),
+  }
+);

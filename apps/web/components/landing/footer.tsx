@@ -37,7 +37,7 @@ export function Footer() {
           <div className="lg:col-span-5 flex flex-col space-y-10 lg:pr-12">
             <Link href="/" className="inline-block group">
                <div className="h-10 w-48 relative grayscale dark:grayscale-0 dark:brightness-150 contrast-125 dark:contrast-100 group-hover:scale-[1.05] transition-transform origin-left">
-                  <img src="/logo.svg" alt="ThirdLeaf" className="h-full w-full object-contain object-left scale-[3.5] origin-left" />
+                  <img src="/logo.svg" alt="ThirdLeaf" className="h-full w-full object-contain object-left" />
                </div>
             </Link>
             
