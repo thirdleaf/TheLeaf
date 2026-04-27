@@ -1,0 +1,15 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+
+
+@Injectable()
+export class NotificationsService {
+  constructor() {}
+
+  async findAll(userId: string) {
+    return [];
+  }
+
+  async findOne(id: string, userId: string) {
+    return null;
+  }
+}
