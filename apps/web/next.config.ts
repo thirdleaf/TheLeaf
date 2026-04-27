@@ -77,8 +77,12 @@ const nextConfig: NextConfig = {
     },
   ],
 
-  // Proxy all /api/* calls to the NestJS backend
+  // Proxy all /api/* calls to the NestJS backend, and provide a direct /logo rewrite
   rewrites: async () => [
+    {
+      source: "/logo",
+      destination: "/logo.svg",
+    },
     {
       source: "/api/:path*",
       destination: `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/v1/:path*`,
